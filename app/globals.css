@@ -647,15 +647,11 @@ html {
   text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
-html, body {
-  overflow-x: hidden;
-  max-width: 100%;
-}
 body {
   padding-bottom: env(safe-area-inset-bottom);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overscroll-behavior-y: none;
+  overflow-x: clip;
 }
 
 /* Inputs: 16px+ on iOS to prevent zoom on focus */
