@@ -179,13 +179,14 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
   display: inline-flex; align-items: center; gap: 2px;
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 999px; padding: 3px;
+  border-radius: 999px; padding: 4px;
 }
 .nav-pill a, .nav-pill button {
-  padding: 6px 12px; border-radius: 999px;
+  padding: 7px 11px; border-radius: 999px;
   color: var(--muted); font-size: 13px; font-weight: 500;
   background: transparent; border: 0; cursor: pointer;
-  line-height: 1;
+  line-height: 1.1;
+  white-space: nowrap;
 }
 .nav-pill a:hover, .nav-pill button:hover { color: var(--text); }
 .nav-pill a.active { color: var(--text); background: var(--panel-2); }
