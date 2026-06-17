@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SearchInput from "./SearchInput";
@@ -56,7 +56,9 @@ export default function SiteHeaderClient() {
 
         {/* Desktop search (hidden on mobile) */}
         <div className="actions search-desktop" style={{ flex: "0 0 auto" }}>
-          <SearchInput />
+          <Suspense fallback={<div className="search-bar" aria-hidden />}>
+            <SearchInput />
+          </Suspense>
           <Link href="/admin" className="btn ghost header-admin-link">
             Admin
           </Link>
