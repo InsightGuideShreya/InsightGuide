@@ -12,6 +12,7 @@ type Product = {
   description: string;
   image_path: string | null;
   affiliate_url: string;
+  rating: number | null;
   position: number;
 };
 
@@ -40,6 +41,7 @@ function emptyProduct(): Product {
     description: "",
     image_path: null,
     affiliate_url: "",
+    rating: null,
     position: 0,
   };
 }
@@ -200,6 +202,7 @@ export default function PostEditor(props: Props) {
       description: (p.description || "").trim(),
       image_path: p.image_path ?? null,
       affiliate_url: p.affiliate_url.trim(),
+      rating: p.rating ?? null,
       position: i,
     }));
     const { error: prodErr } = await supabase.from("products").insert(rows);
@@ -435,6 +438,23 @@ export default function PostEditor(props: Props) {
                 value={p.affiliate_url}
                 onChange={(e) => updateProduct(i, { affiliate_url: e.target.value })}
                 placeholder="https://amzn.to/…"
+              />
+            </div>
+            <div className="field" style={{ width: 140, flexShrink: 0 }}>
+              <label className="label">Rating (0–10)</label>
+              <input
+                className="input"
+                type="number"
+                min={0}
+                max={10}
+                step={0.1}
+                value={p.rating ?? ""}
+                onChange={(e) =>
+                  updateProduct(i, {
+                    rating: e.target.value === "" ? null : Number(e.target.value),
+                  })
+                }
+                placeholder="8.5"
               />
             </div>
           </div>

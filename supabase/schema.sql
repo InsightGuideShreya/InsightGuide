@@ -29,11 +29,15 @@ create table if not exists public.products (
   description text not null default '',
   image_path text,
   affiliate_url text not null,
+  rating numeric(3,1),
   position integer not null default 0,
   created_at timestamptz not null default now()
 );
 
 create index if not exists products_post_id_idx on public.products(post_id);
+
+-- Add-on for existing deployments: per-product rating
+alter table public.products add column if not exists rating numeric(3,1);
 
 -- updated_at trigger
 create or replace function public.set_updated_at()

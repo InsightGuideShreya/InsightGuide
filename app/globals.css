@@ -418,6 +418,38 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
   font-size: 22px; letter-spacing: -0.01em; line-height: 1.2;
 }
 .product p { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+
+/* Post detail product row: image | body (name, rating, desc, buy) */
+.product-card-row {
+  grid-template-columns: 180px 1fr;
+  align-items: start;
+}
+.product-name-row {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap;
+}
+.product-name-row h4 { font-size: 22px; }
+.rating-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 91, 58, 0.12);
+  color: var(--accent-2);
+  border: 1px solid rgba(255, 91, 58, 0.3);
+  font-size: 13px; font-weight: 700;
+  white-space: nowrap;
+}
+.product-card-row .actions {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 720px) {
+  .product-card-row {
+    grid-template-columns: 1fr;
+  }
+  .product-card-row .img { aspect-ratio: 16/10; }
+}
 .product .actions { display: flex; align-items: end; }
 @media (max-width: 720px) {
   .product { grid-template-columns: 1fr; }

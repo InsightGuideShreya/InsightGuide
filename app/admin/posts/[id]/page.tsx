@@ -21,7 +21,7 @@ export default async function EditPostPage({
 
   const { data: products } = await supabase
     .from("products")
-    .select("id, name, description, image_path, affiliate_url, position")
+    .select("id, name, description, image_path, affiliate_url, rating, position")
     .eq("post_id", id)
     .order("position", { ascending: true });
 
