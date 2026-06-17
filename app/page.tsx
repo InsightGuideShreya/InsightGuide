@@ -44,7 +44,6 @@ export default async function HomePage({ searchParams }: SP) {
             <a className="btn lg" href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
               Watch on YouTube ↗
             </a>
-            <Link href="/about" className="btn ghost lg">How we actually test</Link>
           </div>
         </div>
       </section>
