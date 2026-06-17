@@ -5,17 +5,23 @@ import NewsletterForm from "./NewsletterForm";
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
+      <div className="container-wide footer-newsletter">
+        <h5 className="footer-newsletter-title">Newsletter</h5>
+        <div className="footer-newsletter-form">
+          <NewsletterForm />
+        </div>
+      </div>
+
       <div className="container-wide footer-grid">
         <div>
           <div className="brand" style={{ marginBottom: 14 }}>
             <span className="mark">IG</span>
             <span>{SITE_NAME}</span>
           </div>
-          <p style={{ color: "var(--muted)", maxWidth: 340, margin: "0 0 14px", fontSize: 14 }}>
+          <p style={{ color: "var(--muted)", maxWidth: 340, margin: 0, fontSize: 14 }}>
             One person. A smaller set of products tested over weeks, not hours,
             with the verdict written before any deal link goes in.
           </p>
-          <NewsletterForm />
         </div>
 
         <div>
