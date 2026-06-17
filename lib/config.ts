@@ -1,5 +1,5 @@
 export const SITE_NAME = "Insight Guide";
-export const SITE_TAGLINE = "Honest reviews. Real deal links.";
+export const SITE_TAGLINE = "Honest reviews. Real deal.";
 export const SITE_DESCRIPTION =
   "Insight Guide reviews products you actually need. Find deal links for the gear we recommend in our videos.";
 export const YOUTUBE_URL =
