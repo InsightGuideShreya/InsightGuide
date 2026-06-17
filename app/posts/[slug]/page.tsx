@@ -137,11 +137,6 @@ export default async function PostPage({
         <div className="notice">No products listed on this review yet.</div>
       )}
 
-      <div className="notice" style={{ maxWidth: 880, margin: "28px auto 0" }}>
-        Affiliate note: We may earn a small commission if you buy through these
-        links &mdash; at no extra cost to you.
-      </div>
-
       {list.length > 0 ? (
         <div className="post-cta">
           <a
