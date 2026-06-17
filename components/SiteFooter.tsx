@@ -11,10 +11,11 @@ export default function SiteFooter() {
             <span className="mark">IG</span>
             <span>{SITE_NAME}</span>
           </div>
-          <p style={{ color: "var(--muted)", maxWidth: 340, margin: 0, fontSize: 14 }}>
+          <p style={{ color: "var(--muted)", maxWidth: 340, margin: "0 0 14px", fontSize: 14 }}>
             One person. A smaller set of products tested over weeks, not hours,
             with the verdict written before any deal link goes in.
           </p>
+          <NewsletterForm />
         </div>
 
         <div>
@@ -36,11 +37,6 @@ export default function SiteFooter() {
           <h5>Legal</h5>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
-        </div>
-
-        <div>
-          <h5>Newsletter</h5>
-          <NewsletterForm />
         </div>
       </div>
 
