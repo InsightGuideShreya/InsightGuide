@@ -30,7 +30,12 @@ export default function SiteFooter() {
           <a href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer">YouTube ↗</a>
           <Link href="/about">About</Link>
           <Link href="/search">Search</Link>
-          <Link href="/admin">Admin</Link>
+        </div>
+
+        <div>
+          <h5>Legal</h5>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
         </div>
 
         <div>
