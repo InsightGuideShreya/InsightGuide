@@ -47,11 +47,9 @@ export default function SiteFooter() {
       </div>
 
       <div className="container-wide copyright">
-        <div>
-          © {new Date().getFullYear()} {SITE_NAME}. Some links on this page are
-          affiliate links — we may earn a small commission at no extra cost to you. The verdict is written before the link goes in.
+        <div className="copyright-mark">
+          © {new Date().getFullYear()} {SITE_NAME}
         </div>
-        <div></div>
       </div>
     </footer>
   );

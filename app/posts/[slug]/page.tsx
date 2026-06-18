@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { publicUrl, formatDate } from "@/lib/util";
-import { YOUTUBE_URL } from "@/lib/config";
 
 export const revalidate = 60;
 export const dynamic = "force-dynamic";
@@ -136,27 +135,6 @@ export default async function PostPage({
       ) : (
         <div className="notice">No products listed on this review yet.</div>
       )}
-
-      {list.length > 0 ? (
-        <div className="post-cta">
-          <a
-            className="btn ghost"
-            href={YOUTUBE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Watch video
-          </a>
-          <a
-            className="btn"
-            href={list[0].affiliate_url}
-            target="_blank"
-            rel="sponsored noopener noreferrer"
-          >
-            See on retailer ↗
-          </a>
-        </div>
-      ) : null}
     </article>
   );
 }
