@@ -149,17 +149,7 @@ export default async function AdminPostsPage({
               )}
               <form action={deletePost} style={{ display: "contents" }} id={`delete-${selected.id}`}>
                 <input type="hidden" name="id" value={selected.id} />
-                <button
-                  type="submit"
-                  className="btn danger lg"
-                  onClick={(e) => {
-                    if (!confirm("Delete this post permanently? This cannot be undone.")) {
-                      e.preventDefault();
-                    }
-                  }}
-                  // The above onClick is server-rendered as a static attribute; client-side
-                  // confirmation is handled below by an inline script.
-                >
+                <button type="submit" className="btn danger lg">
                   Delete
                 </button>
               </form>
