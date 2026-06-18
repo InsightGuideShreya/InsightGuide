@@ -100,31 +100,42 @@ create trigger posts_set_updated_at
 alter table public.posts enable row level security;
 alter table public.products enable row level security;
 
--- Public can read only PUBLISHED posts
-create policy "public reads published posts"
-  on public.posts for select
-  using (status = 'published');
+-- Policies are guarded with a DO block because PostgreSQL's
+-- CREATE POLICY has no IF NOT EXISTS. Re-runs of this file are safe.
 
--- Public can read products whose parent post is PUBLISHED
-create policy "public reads products of published posts"
-  on public.products for select
-  using (
-    exists (
-      select 1 from public.posts p
-      where p.id = products.post_id and p.status = 'published'
-    )
-  );
+do $$
+begin
+  if not exists (select 1 from pg_policies where schemaname='public' and tablename='posts' and policyname='public reads published posts') then
+    create policy "public reads published posts"
+      on public.posts for select
+      using (status = 'published');
+  end if;
 
--- Authenticated users (admins) can do everything on posts and products
-create policy "authenticated manages posts"
-  on public.posts for all
-  to authenticated
-  using (true) with check (true);
+  if not exists (select 1 from pg_policies where schemaname='public' and tablename='products' and policyname='public reads products of published posts') then
+    create policy "public reads products of published posts"
+      on public.products for select
+      using (
+        exists (
+          select 1 from public.posts p
+          where p.id = products.post_id and p.status = 'published'
+        )
+      );
+  end if;
 
-create policy "authenticated manages products"
-  on public.products for all
-  to authenticated
-  using (true) with check (true);
+  if not exists (select 1 from pg_policies where schemaname='public' and tablename='posts' and policyname='authenticated manages posts') then
+    create policy "authenticated manages posts"
+      on public.posts for all
+      to authenticated
+      using (true) with check (true);
+  end if;
+
+  if not exists (select 1 from pg_policies where schemaname='public' and tablename='products' and policyname='authenticated manages products') then
+    create policy "authenticated manages products"
+      on public.products for all
+      to authenticated
+      using (true) with check (true);
+  end if;
+end $$;
 
 
 -- ---------------------------------------------------------------
@@ -140,14 +151,21 @@ create table if not exists public.newsletter_subscribers (
 
 alter table public.newsletter_subscribers enable row level security;
 
-create policy "anyone can subscribe"
-  on public.newsletter_subscribers for insert
-  with check (true);
+do $$
+begin
+  if not exists (select 1 from pg_policies where schemaname='public' and tablename='newsletter_subscribers' and policyname='anyone can subscribe') then
+    create policy "anyone can subscribe"
+      on public.newsletter_subscribers for insert
+      with check (true);
+  end if;
 
-create policy "authenticated reads subscribers"
-  on public.newsletter_subscribers for select
-  to authenticated
-  using (true);
+  if not exists (select 1 from pg_policies where schemaname='public' and tablename='newsletter_subscribers' and policyname='authenticated reads subscribers') then
+    create policy "authenticated reads subscribers"
+      on public.newsletter_subscribers for select
+      to authenticated
+      using (true);
+  end if;
+end $$;
 
 
 -- =====================================================================
@@ -158,21 +176,25 @@ create policy "authenticated reads subscribers"
 --   - Name: media
 --   - Public bucket: ON
 --
--- Then add these two policies in the SQL Editor (this file's storage
--- block is the canonical place for them):
+-- Then run the storage policies below. They are guarded so re-runs are
+-- safe.
 
-create policy "public read media"
-  on storage.objects for select
-  using ( bucket_id = 'media' );
+do $$
+begin
+  if not exists (select 1 from pg_policies where schemaname='storage' and tablename='objects' and policyname='public read media') then
+    create policy "public read media"
+      on storage.objects for select
+      using ( bucket_id = 'media' );
+  end if;
 
-create policy "authenticated write media"
-  on storage.objects for all
-  to authenticated
-  using ( bucket_id = 'media' )
-  with check ( bucket_id = 'media' );
-
--- If you've already created the policies once and re-run this file,
--- you'll see "policy already exists". That's fine — ignore it.
+  if not exists (select 1 from pg_policies where schemaname='storage' and tablename='objects' and policyname='authenticated write media') then
+    create policy "authenticated write media"
+      on storage.objects for all
+      to authenticated
+      using ( bucket_id = 'media' )
+      with check ( bucket_id = 'media' );
+  end if;
+end $$;
 
 
 -- =====================================================================
