@@ -3,7 +3,7 @@ export const SITE_TAGLINE = "Honest reviews. Real deal.";
 export const SITE_DESCRIPTION =
   "Insight Guide reviews products you actually need. Find deal links for the gear we recommend in our videos.";
 export const YOUTUBE_URL =
-  process.env.NEXT_PUBLIC_YOUTUBE_URL || "https://www.youtube.com/@InsightGuide";
+  process.env.NEXT_PUBLIC_YOUTUBE_URL || "https://www.youtube.com/@ReviewMartHome";
 
 export const CATEGORIES = [
   "All",
