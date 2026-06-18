@@ -1358,3 +1358,39 @@ button:focus-visible,
   flex-shrink: 0;
 }
 .admin-product .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ----- Admin posts: mobile overflow fix ----- */
+.admin-detail,
+.admin-sidebar,
+.admin-products,
+.admin-detail-actions {
+  min-width: 0;
+  max-width: 100%;
+}
+.admin-product {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.admin-product > * { min-width: 0; }
+.admin-product a[href^="http"] {
+  display: block;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  max-width: 100%;
+  font-size: 12px;
+}
+
+/* Defensive: never let any form / button overflow the panel */
+.admin-detail form,
+.admin-detail input,
+.admin-detail button,
+.admin-detail a {
+  max-width: 100%;
+}
+.admin-detail-actions form { min-width: 0; }
+
+/* Admin login: tighten padding on the smallest screens */
+@media (max-width: 480px) {
+  .admin-detail { padding: 16px; }
+  .admin-detail-head h2 { word-break: break-word; }
+}

@@ -190,7 +190,7 @@ export default async function AdminPostsPage({
                           target="_blank"
                           rel="noopener noreferrer"
                           className="muted"
-                          style={{ fontSize: 12, display: "inline-block", marginTop: 6, textDecoration: "underline" }}
+                          style={{ fontSize: 12, display: "inline-block", marginTop: 6, textDecoration: "underline", overflowWrap: "anywhere", wordBreak: "break-all", maxWidth: "100%" }}
                         >
                           {p.affiliate_url}
                         </a>
