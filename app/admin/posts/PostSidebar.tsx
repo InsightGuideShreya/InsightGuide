@@ -9,9 +9,7 @@ type Post = {
   headline: string;
   status: string;
   category: string;
-  rating: number | null;
   created_at: string;
-  featured: boolean;
 };
 
 export default function PostSidebar({

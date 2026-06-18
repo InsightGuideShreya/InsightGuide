@@ -52,7 +52,7 @@ export default async function AdminPostsPage({
 
   const { data: posts } = await supabase
     .from("posts")
-    .select("id, slug, headline, status, category, rating, created_at, featured")
+    .select("id, slug, headline, status, category, created_at")
     .order("created_at", { ascending: false });
 
   const all = posts ?? [];
@@ -110,17 +110,9 @@ export default async function AdminPostsPage({
                   <span className={`badge ${selected.status === "published" ? "live" : "draft"}`}>
                     {selected.status}
                   </span>
-                  {selected.featured ? (
-                    <span className="badge live">Featured</span>
-                  ) : null}
                   <span className="chip" style={{ padding: "3px 10px" }}>
                     {selected.category}
                   </span>
-                  {selected.rating ? (
-                    <span className="chip" style={{ padding: "3px 10px" }}>
-                      ★ {selected.rating.toFixed(1)}
-                    </span>
-                  ) : null}
                 </div>
                 <h2 className="display h3" style={{ margin: 0 }}>
                   {selected.headline}

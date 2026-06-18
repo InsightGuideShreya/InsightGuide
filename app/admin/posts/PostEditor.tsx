@@ -20,13 +20,8 @@ type Post = {
   id: string;
   slug: string;
   headline: string;
-  excerpt: string;
-  description: string;
   cover_image_path: string | null;
   category: string;
-  verdict: string | null;
-  rating: number | null;
-  featured: boolean;
   status: "draft" | "published";
   author_id?: string | null;
 };
@@ -74,15 +69,10 @@ export default function PostEditor(props: Props) {
 
   const [headline, setHeadline] = useState(init?.headline ?? "");
   const [slug, setSlug] = useState(init?.slug ?? "");
-  const [excerpt, setExcerpt] = useState(init?.excerpt ?? "");
-  const [description, setDescription] = useState(init?.description ?? "");
   const [coverImagePath, setCoverImagePath] = useState<string | null>(
     init?.cover_image_path ?? null,
   );
   const [category, setCategory] = useState(init?.category ?? "Reviews");
-  const [verdict, setVerdict] = useState(init?.verdict ?? "");
-  const [rating, setRating] = useState<number | null>(init?.rating ?? null);
-  const [featured, setFeatured] = useState<boolean>(init?.featured ?? false);
   const [status, setStatus] = useState<"draft" | "published">(
     (init?.status as "draft" | "published") ?? "draft",
   );
@@ -153,13 +143,8 @@ export default function PostEditor(props: Props) {
         .insert({
           headline: headline.trim(),
           slug: finalSlug,
-          excerpt: excerpt.trim(),
-          description: description.trim(),
           cover_image_path: coverImagePath,
           category,
-          verdict: verdict.trim() || null,
-          rating,
-          featured,
           status: nextStatus,
           author_id: props.authorId ?? null,
         })
@@ -177,13 +162,8 @@ export default function PostEditor(props: Props) {
         .update({
           headline: headline.trim(),
           slug: finalSlug,
-          excerpt: excerpt.trim(),
-          description: description.trim(),
           cover_image_path: coverImagePath,
           category,
-          verdict: verdict.trim() || null,
-          rating,
-          featured,
           status: nextStatus,
         })
         .eq("id", props.post.id);
@@ -242,21 +222,20 @@ export default function PostEditor(props: Props) {
           <h1>{props.mode === "create" ? "New post" : "Edit post"}</h1>
           <div className="desc">
             {props.mode === "edit"
-              ? "Tweak headline, content, products, and verdict."
-              : "Compose a fresh review. You can save as draft or publish immediately."}
+              ? "Pick a status, change the headline or category, and edit products."
+              : "Set a headline, category, status, and add the products covered in this review."}
           </div>
         </div>
         <div className="row">
           <span className={`badge ${status === "published" ? "live" : "draft"}`}>{status}</span>
           <span className="badge">{category}</span>
-          {featured ? <span className="badge live">Featured</span> : null}
         </div>
       </div>
 
       {/* Review meta */}
       <div className="panel-card">
         <div className="row">
-          <div className="field" style={{ flex: 1, minWidth: 260 }}>
+          <div className="field" style={{ flex: 2, minWidth: 260 }}>
             <label className="label">Headline</label>
             <input
               className="input"
@@ -265,19 +244,7 @@ export default function PostEditor(props: Props) {
               placeholder="Best Budget Monitors of 2026"
             />
           </div>
-          <div className="field" style={{ flex: 1, minWidth: 220 }}>
-            <label className="label">Slug</label>
-            <input
-              className="input"
-              value={slug}
-              onChange={(e) => {
-                slugTouched.current = true;
-                setSlug(e.target.value);
-              }}
-              placeholder="best-budget-monitors-2026"
-            />
-          </div>
-          <div className="field" style={{ flex: 1, minWidth: 180 }}>
+          <div className="field" style={{ flex: 1, minWidth: 200 }}>
             <label className="label">Category</label>
             <select className="select" value={category} onChange={(e) => setCategory(e.target.value)}>
               {CATEGORIES.filter((c) => c !== "All").map((c) => (
@@ -285,10 +252,7 @@ export default function PostEditor(props: Props) {
               ))}
             </select>
           </div>
-        </div>
-
-        <div className="row">
-          <div className="field" style={{ flex: 1, minWidth: 220 }}>
+          <div className="field" style={{ flex: 1, minWidth: 180 }}>
             <label className="label">Status</label>
             <select
               className="select"
@@ -299,67 +263,18 @@ export default function PostEditor(props: Props) {
               <option value="published">Published</option>
             </select>
           </div>
-          <div className="field" style={{ flex: 1, minWidth: 200 }}>
-            <label className="label">Rating (0–10)</label>
-            <input
-              className="input"
-              type="number"
-              min={0}
-              max={10}
-              step={0.1}
-              value={rating ?? ""}
-              onChange={(e) =>
-                setRating(e.target.value === "" ? null : Number(e.target.value))
-              }
-              placeholder="8.5"
-            />
-          </div>
-          <div
-            className="field"
-            style={{ flex: 1, minWidth: 200, display: "flex", alignItems: "end" }}
-          >
-            <label className="row" style={{ alignItems: "center", gap: 10 }}>
-              <input
-                type="checkbox"
-                checked={featured}
-                onChange={(e) => setFeatured(e.target.checked)}
-                style={{ width: 16, height: 16, accentColor: "var(--accent)" }}
-              />
-              <span style={{ color: "var(--text)", fontSize: 14 }}>
-                Pin as featured on the homepage
-              </span>
-            </label>
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label">Short description (home grid)</label>
-          <textarea
-            className="textarea"
-            style={{ minHeight: 80 }}
-            value={excerpt}
-            onChange={(e) => setExcerpt(e.target.value)}
-            placeholder="A quick one-liner about what's in this review…"
-          />
-        </div>
-
-        <div className="field">
-          <label className="label">Full description</label>
-          <textarea
-            className="textarea"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Write the intro to your review here…"
-          />
         </div>
 
         <div className="field" style={{ marginBottom: 0 }}>
-          <label className="label">Verdict (one-paragraph wrap-up)</label>
-          <textarea
-            className="textarea"
-            value={verdict ?? ""}
-            onChange={(e) => setVerdict(e.target.value)}
-            placeholder="The bottom line on this review…"
+          <label className="label">Slug</label>
+          <input
+            className="input"
+            value={slug}
+            onChange={(e) => {
+              slugTouched.current = true;
+              setSlug(e.target.value);
+            }}
+            placeholder="best-budget-monitors-2026"
           />
         </div>
       </div>
